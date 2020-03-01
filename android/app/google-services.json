@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "312981577116",
+    "firebase_url": "https://poolish-bd3b2.firebaseio.com",
+    "project_id": "poolish-bd3b2",
+    "storage_bucket": "poolish-bd3b2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:312981577116:android:b7cb48cc7f4dfbf9787c59",
+        "android_client_info": {
+          "package_name": "com.lashariamal.poolish"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "312981577116-ub1l5hmb27naqtft0cqtn1t3fu7s0i0c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaBzZkOFfeUnmiLyXG6p4g9tbj34cZ0Ug"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "312981577116-ub1l5hmb27naqtft0cqtn1t3fu7s0i0c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
