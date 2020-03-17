@@ -3,19 +3,19 @@ import 'package:poolish/shared/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 
-class TestScreen extends StatefulWidget {
+class ColorTestScreen extends StatefulWidget {
   final String testName;
   final String val;
   final Function updateVal;
-  TestScreen({Key key, @required this.testName,@required this.updateVal,@required this.val}) : super(key: key);
+  ColorTestScreen({Key key, @required this.testName,@required this.updateVal,@required this.val}) : super(key: key);
   //@override
 
   
   @override
-  _TestScreenState createState() => _TestScreenState();
+  _ColorTestScreenState createState() => _ColorTestScreenState();
 }
 
-class _TestScreenState extends State<TestScreen> {
+class _ColorTestScreenState extends State<ColorTestScreen> {
   Widget build(BuildContext context) {
     List <String> colors=colorCodes[widget.testName];
     int a=0;
