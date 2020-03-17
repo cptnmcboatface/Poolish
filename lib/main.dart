@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:poolish/screens/wrapper.dart';
 import 'package:provider/provider.dart';
 import 'services/auth.dart';
+import 'screens/splash_screen.dart';
 // import 'screens/home/test_list.dart';
 
 void main() => runApp(MyApp());
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
     return  StreamProvider.value(
       value: AuthService().user,
       child: MaterialApp(
-              home:Wrapper(),
+              home:SplashScreen(),
             )
     );
     
