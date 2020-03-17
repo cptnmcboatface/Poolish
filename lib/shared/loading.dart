@@ -7,8 +7,6 @@ class Loading extends StatelessWidget {
   Loading({this.message});
   @override
   Widget build(BuildContext context) {
-    
-
     return Material(
           color: Colors.white,
           child: Container(
