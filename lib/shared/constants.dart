@@ -36,3 +36,10 @@ Map<String,List<String>> colorCodes={
   "Lead":"F4AA62 F4944D EE7767 E0595E CE3E67 B1255".split(" ")
   };
 
+enum HomeScreenID { 
+   test, 
+   previousResults, 
+   yourInfo, 
+   setting,
+   logOut, 
+}

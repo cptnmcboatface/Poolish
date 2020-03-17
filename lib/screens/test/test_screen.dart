@@ -28,8 +28,8 @@ class _TestScreenState extends State<TestScreen> {
        appBar: AppBar(
       centerTitle: true,
       leading: FlatButton(
-        onPressed: ()async=> await _auth.signOut(),
-      child: Icon(Icons.person, color: Colors.white,),shape: new CircleBorder(),),
+        onPressed: ()=> Navigator.pop(context),
+      child: Icon(Icons.arrow_back_ios, color: Colors.white,),shape: new CircleBorder(),),
       title: Text(
         "Pool Tests",
         style: GoogleFonts.poppins(textStyle:TextStyle(fontSize: 40,color: Colors.white),)

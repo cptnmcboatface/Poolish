@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:poolish/screens/test/test_screen.dart';
 import 'package:poolish/shared/constants.dart';
 import 'package:poolish/services/auth.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:poolish/screens/test/test_screen.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -18,25 +18,23 @@ class _HomeState extends State<Home> {
     return MaterialApp(
         title: "TestScreen SCREEN",
         home: Scaffold(
-            appBar: AppBar(
-                centerTitle: true,
-                leading: FlatButton(
-                  onPressed: () async => await _auth.signOut(),
-                  child: Icon(
-                    Icons.person,
-                    color: Colors.white,
-                  ),
-                  shape: new CircleBorder(),
-                ),
-                title: Text("Pool Tests",
-                    style: GoogleFonts.poppins(
-                      textStyle: TextStyle(fontSize: 40, color: Colors.white),
-                    )),
-                backgroundColor: Colors.white,
-                elevation: 0.0,
-                flexibleSpace: Container(
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(colors: gradient)))),
+            appBar: PreferredSize(
+              preferredSize: Size.fromHeight(80.0),
+              child: AppBar(
+                  centerTitle: true,
+                  backgroundColor: Colors.white,
+                  elevation: 0.0,
+                  flexibleSpace: Container(
+                    alignment: Alignment.center,
+                    child: Text("Poolish",
+                      style: GoogleFonts.dancingScript(
+                        textStyle: TextStyle(fontSize: 80, color: Colors.white),
+                      )),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(50)),
+                          gradient: LinearGradient(colors: gradient)))),
+            ),
             body: Container(
               // margin: EdgeInsets.symmetric(vertical:20),
               // padding: EdgeInsets.symmetric(vertical:20),
@@ -56,17 +54,16 @@ class _HomeState extends State<Home> {
 
     List<Widget> rows = [];
     var jobCategories = [
-      {"name":"Run Test",
-        // "image" : 
-      },
-      {"name":"Previous Results"},
-      {"name":"Your Information"},
-      {"name":"Settings"}
+      {"name": "Run Water Test", "icon": Icons.playlist_add_check,"id":HomeScreenID.test},
+      {"name": "Previous Results", "icon": Icons.history,"id":HomeScreenID.previousResults},
+      {"name": "Your Information", "icon": Icons.info_outline,"id":HomeScreenID.yourInfo},
+      {"name": "Change Settings", "icon": Icons.settings,"id":HomeScreenID.setting},
+      {"name": "Log Out", "icon": Icons.person_outline,"id":HomeScreenID.logOut}
     ];
     int i = 0;
     for (var category in jobCategories) {
       if (i < 2) {
-        rows.add(getCategoryContainer(category["name"]));
+        rows.add(getCategoryContainer(category));
         i++;
       } else {
         i = 0;
@@ -75,7 +72,7 @@ class _HomeState extends State<Home> {
           children: rows,
         ));
         rows = [];
-        rows.add(getCategoryContainer(category["name"]));
+        rows.add(getCategoryContainer(category));
         i++;
       }
     }
@@ -88,7 +85,7 @@ class _HomeState extends State<Home> {
     return jobCategoriesCards;
   }
 
-  Widget getCategoryContainer(String categoryName) {
+  Widget getCategoryContainer(var categoryName) {
     return new Container(
         margin: EdgeInsets.only(right: 10, left: 10, top: 20),
         height: 160,
@@ -99,7 +96,7 @@ class _HomeState extends State<Home> {
           borderRadius: BorderRadius.all(Radius.circular(15)),
           boxShadow: [
             new BoxShadow(
-              color: Colors.grey,
+              color: Colors.grey[350],
               blurRadius: 10.0,
             ),
           ],
@@ -110,23 +107,45 @@ class _HomeState extends State<Home> {
               mainAxisAlignment: MainAxisAlignment.center,
               // crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Icon
-                (Icons.info,size: 60,
+                Icon(
+                  categoryName["icon"],
+                  size: 60,
                   color: mainThemeColor,
                 ),
-                SizedBox(height: 10,)
-                ,
-                Text(categoryName),
-                
+                SizedBox(
+                  height: 15,
+                ),
+                Text(categoryName["name"],
+                    textAlign: TextAlign.left,
+                    style: GoogleFonts.poppins(
+                      textStyle: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                      ),
+                    )),
               ],
             ),
           ),
-          onPressed: () {},
+          onPressed: () {
+            changeScreen(categoryName["id"]);
+          },
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
-            
           ),
-          
         ));
+  }
+  void changeScreen(var id){
+
+    if (id == HomeScreenID.logOut){
+      _auth.signOut();
+    }else if( id== HomeScreenID.test){
+      Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => TestScreen(
+                      uid: widget.uid,
+                    )),
+          );
+    }
   }
 }
