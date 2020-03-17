@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Loading extends StatelessWidget {
   final String message;
@@ -19,21 +20,18 @@ class Loading extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
             children:[
+              
               Text(
                 "Poolish",
-                style: TextStyle(fontSize: 100,
+                style: GoogleFonts.dancingScript(textStyle:TextStyle(fontSize: 100,
                 fontFamily: 'DancingScript',
-                
-                color: Colors.white),
+                color: Colors.white)),
               ),
               SizedBox(height: 20,)
               ,
               Text(
                 message,
-                style: TextStyle(fontSize: 20,
-                fontFamily: 'GlacielIndifference',
-                
-                color: Colors.white),
+                style: GoogleFonts.poppins(textStyle: TextStyle(fontSize: 20, color: Colors.white))
               ),
               SizedBox(height: 20,)
               ,

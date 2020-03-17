@@ -3,7 +3,7 @@ import 'package:poolish/screens/test/color_test.dart';
 import 'package:poolish/services/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:poolish/shared/constants.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 class TestsList extends StatefulWidget {
   
   final String uid;
@@ -58,7 +58,7 @@ class _TestsListState extends State<TestsList> {
                     onTap: (){
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => TestScreen()),
+                          MaterialPageRoute(builder: (context) => TestScreen(testName: testName, val: value,updateVal: updateVal,)),
                         );
                       
                     },
@@ -68,13 +68,12 @@ class _TestsListState extends State<TestsList> {
                       ),
                     title: new Text(
                       testName,
-                      style: TextStyle(
-                        fontFamily:"GlacielIndifference",
-                        color: Colors.black,
-                        fontSize:20
-                      ),),
+                      style: GoogleFonts.poppins(textStyle:TextStyle(color: Colors.black,fontSize:20)))
                   );
 
+  }
+  void updateVal(String test, String selected)async{
+    await widget.dB.updateDocument(test,selected);
   }
 }
 

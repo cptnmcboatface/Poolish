@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:poolish/services/auth.dart';
 import 'package:poolish/shared/constants.dart';
 import 'package:poolish/screens/home/test_list.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 
 
 class Home extends StatefulWidget {
@@ -30,10 +30,7 @@ class _HomeState extends State<Home> {
       child: Icon(Icons.person, color: Colors.white,),shape: new CircleBorder(),),
       title: Text(
         "Pool Tests",
-        style: TextStyle(
-            fontSize: 40,
-            fontFamily: 'GlacielIndifference',
-            color: Colors.white),
+        style: GoogleFonts.poppins(textStyle:TextStyle(fontSize: 40,color: Colors.white),)
         ),
       backgroundColor: Colors.white,
       elevation: 0.0,
@@ -48,7 +45,7 @@ class _HomeState extends State<Home> {
           padding: EdgeInsets.symmetric(horizontal: 20,vertical : 20),
           child:Text(
           'Complete All Tests to Measure Safety of your Pool',
-          style: TextStyle(color: Color.fromRGBO(166, 166, 166, 1.0),fontFamily: "GlacielIndifference",fontSize: 20),
+          style: GoogleFonts.poppins(textStyle:TextStyle(color: Color.fromRGBO(166, 166, 166, 1.0),fontSize: 20)),
         // style: ,
           )
         ),
@@ -65,6 +62,7 @@ class _HomeState extends State<Home> {
         ),
     );
  
-  }  
+  }
+  
 
 }

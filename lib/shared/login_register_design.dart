@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'package:google_fonts/google_fonts.dart';
 
 class CurvedShape extends StatelessWidget {
   final curveHeightCS;
@@ -22,9 +23,7 @@ class CurvedShape extends StatelessWidget {
               child:Text(
               "Poolish",
               
-              style: TextStyle(fontSize: curveHeightCS*0.3,
-              fontFamily: 'DancingScript',
-              color: Colors.white),
+              style: GoogleFonts.dancingScript(textStyle: TextStyle(fontSize: curveHeightCS*0.3,color: Colors.white),)
             )
             ),
 

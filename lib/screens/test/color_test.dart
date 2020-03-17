@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:poolish/shared/constants.dart';
-
-
+import 'package:google_fonts/google_fonts.dart';
 
 
 class TestScreen extends StatefulWidget {
-  
-  TestScreen();
+  final String testName;
+  final String val;
+  final Function updateVal;
+  TestScreen({Key key, @required this.testName,@required this.updateVal,@required this.val}) : super(key: key);
   //@override
+
   
   @override
   _TestScreenState createState() => _TestScreenState();
@@ -15,17 +17,16 @@ class TestScreen extends StatefulWidget {
 
 class _TestScreenState extends State<TestScreen> {
   Widget build(BuildContext context) {
-    List <String> colors=["EB596A", "ED636A", "ED7B67", "ECA16E", "D5B663", "ACB460", "8FA460"];
+    List <String> colors=colorCodes[widget.testName];
     int a=0;
     return Scaffold(
       appBar: AppBar(
       centerTitle: true,
       title: Text(
-        "Pool Tests",
-        style: TextStyle(
+        widget.testName,
+        style: GoogleFonts.poppins(textStyle:TextStyle(
             fontSize: 40,
-            fontFamily: 'GlacielIndifference',
-            color: Colors.white),
+            color: Colors.white))
         ),
       backgroundColor: Colors.white,
       elevation: 0.0,
@@ -38,9 +39,7 @@ class _TestScreenState extends State<TestScreen> {
 
       //myW();
   }
-}
-
-Widget myW(List colors, int iter){
+  Widget myW(List colors, int iter){
   int numberRows = ((colors.length)/3).ceil();
   print (numberRows);
   List<Widget> rows = new List();
@@ -82,6 +81,33 @@ Widget rowWidget(List colors, int iter){
   );
 }
 
+
+Widget tileWidget(List colors, int iter){
+  String c= colors[iter];
+  
+  final Color col = HexColor(c);
+
+   return new Container(
+    decoration: BoxDecoration(
+      color: col,
+      border: Border.all(width: 3.0,color:c==widget.val? mainThemeColor:Colors.black,),
+  
+    borderRadius: BorderRadius.all(Radius.circular(5.0))
+    ), 
+    height: double.infinity,
+    width: 100,
+    
+    child: FlatButton(onPressed: (){
+      // c==widget.val?widget.updateVal(widget.testName,null):widget.updateVal(widget.testName,c);
+      widget.updateVal(widget.testName,c);
+      Navigator.pop(context);
+    }, child: null)
+
+    );
+}
+}
+
+
 class HexColor extends Color {
   static int _getColorFromHex(String hexColor) {
     if (hexColor.length == 6) {
@@ -93,19 +119,3 @@ class HexColor extends Color {
   HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
 }
 
-
-Widget tileWidget(List colors, int iter){
-  String c= colors[iter];
-  print (c);
-  final Color col = HexColor(c);
-  print (col);
-
-   return new Container(
-   // padding: EdgeInsets.symmetric(horizontal: 1),
-    height: double.infinity,
-    width: 100,
-    color: col,
-    child: FlatButton(onPressed: (){}, child: null)
-
-    );
-}

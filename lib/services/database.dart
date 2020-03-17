@@ -19,6 +19,13 @@ class DatabaseService{
   }
 
   
+  Future<void> updateDocument(String testName, String selected) async {
+    
+      return _firestore.collection('tests').document(uid).updateData({
+        testName: selected,
+      });
+    }
+    
 
   Stream<DocumentSnapshot> get brews {
     return  _firestore.collection('tests').document(uid).snapshots();

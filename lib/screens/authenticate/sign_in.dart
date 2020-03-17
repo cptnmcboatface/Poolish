@@ -3,7 +3,7 @@ import 'package:poolish/services/auth.dart';
 import 'package:poolish/shared/loading.dart';
 import 'package:poolish/shared/constants.dart';
 import 'package:poolish/shared/login_register_design.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 const CURVE_HEIGHT = 300.0;
 const AVATAR_RADIUS = CURVE_HEIGHT * 0.2;//CURVE_HEIGHT * 0.21;
 const AVATAR_DIAMETER = AVATAR_RADIUS * 2;
@@ -78,8 +78,8 @@ class _SignInState extends State<SignIn> {
                 decoration: textInputDecoration.copyWith(
                   hintText: 'Enter E-Mail',
                   labelText: 'E-Mail',
-                  hintStyle: hintStyle,
-                  labelStyle: TextStyle(color: Color.fromRGBO(200, 200, 200, 1.0)),
+                  hintStyle: GoogleFonts.poppins(textStyle:hintStyle),
+                  labelStyle: GoogleFonts.poppins(textStyle:TextStyle(color: Color.fromRGBO(200, 200, 200, 1.0))),
                   focusColor: mainThemeColor,
                   focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: mainThemeColor,))
                   ),
@@ -98,8 +98,8 @@ class _SignInState extends State<SignIn> {
 
                   hintText: 'Password',
                   labelText: 'Password',
-                  hintStyle: hintStyle,
-                  labelStyle: TextStyle(color: Color.fromRGBO(200, 200, 200, 1.0)),
+                  hintStyle: GoogleFonts.poppins(textStyle:hintStyle),
+                  labelStyle: GoogleFonts.poppins(textStyle:TextStyle(color: Color.fromRGBO(200, 200, 200, 1.0))),
                   focusColor: mainThemeColor,
                   focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: mainThemeColor,))
                   ),
@@ -146,11 +146,7 @@ class _SignInState extends State<SignIn> {
                       child: Text(
                         "Sign In",
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontFamily: "GlacielIndifference"
-                        ),
+                        style: GoogleFonts.poppins(textStyle:TextStyle(color: Colors.white,fontSize: 20)),
                       ),
                     ),
                   ),
@@ -160,7 +156,7 @@ class _SignInState extends State<SignIn> {
                 widget.toggleView();
               }, child: Text(
                 "New User? Sign up",
-                style: TextStyle(fontFamily:"GlacielIndifference",fontSize: 15),
+                style: GoogleFonts.poppins(textStyle:TextStyle(fontSize: 15)),
               ))
             ],
           ),
