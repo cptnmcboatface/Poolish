@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:poolish/screens/wrapper.dart';
 import 'package:provider/provider.dart';
 import 'services/auth.dart';
 import 'screens/splash_screen.dart';

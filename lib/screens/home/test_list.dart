@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:poolish/screens/test/color_test.dart';
-import 'package:poolish/services/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:poolish/shared/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 class TestsList extends StatefulWidget {
-  
-  final String uid;
-  var dB;
-  TestsList({this.uid}){
-    dB = DatabaseService(uid: uid);
-  }
+  var testListsStream;
+  var updateDoc;
+  TestsList({this.testListsStream,this.updateDoc});
 
   @override
   _TestsListState createState() => _TestsListState();
@@ -22,7 +18,7 @@ class _TestsListState extends State<TestsList> {
   Widget build(BuildContext context) {
     return Container(
       child:StreamBuilder<DocumentSnapshot>(
-                stream: widget.dB.brews,
+                stream: widget.testListsStream,
                 builder: (context, snapshot) {
                   if (!snapshot.hasData)
                     return Center(child: Text("Error Connecting to the Internet", style:errorStyle),);
@@ -73,7 +69,7 @@ class _TestsListState extends State<TestsList> {
 
   }
   void updateVal(String test, String selected)async{
-    await widget.dB.updateDocument(test,selected);
+    await widget.updateDoc(test,selected);
   }
 }
 

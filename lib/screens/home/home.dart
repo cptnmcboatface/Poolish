@@ -3,12 +3,14 @@ import 'package:poolish/services/auth.dart';
 import 'package:poolish/shared/constants.dart';
 import 'package:poolish/screens/home/test_list.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:poolish/services/database.dart';
 
 class Home extends StatefulWidget {
   final String uid ;
-  
-  Home({this.uid});
+  var dB;
+  Home({this.uid}){
+    dB = DatabaseService(uid: uid);
+  }
   
   @override
   _HomeState createState() => _HomeState();
@@ -53,7 +55,7 @@ class _HomeState extends State<Home> {
         Expanded
         (
           child: Container(
-            child: TestsList(uid: widget.uid,)
+            child: TestsList(testListsStream: widget.dB.testList,updateDoc: widget.dB.updateDocument,)
             ),
         )
         ,

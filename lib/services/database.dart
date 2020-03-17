@@ -27,7 +27,7 @@ class DatabaseService{
     }
     
 
-  Stream<DocumentSnapshot> get brews {
+  Stream<DocumentSnapshot> get testList {
     return  _firestore.collection('tests').document(uid).snapshots();
   }
   
