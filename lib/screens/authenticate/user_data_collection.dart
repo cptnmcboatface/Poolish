@@ -51,9 +51,7 @@ class _UserDataState extends State<UserData> {
                       SizedBox(height: 15.0),
                       InputDecorator(
                         decoration: textInputDecoration,
-                        
                         child: DropdownButtonHideUnderline(
-                          
                           child: DropdownButton<String>(
                             hint: Text("Are you a...",
                                 style: GoogleFonts.poppins(
@@ -106,7 +104,7 @@ class _UserDataState extends State<UserData> {
                         style: textInputStyle,
                         decoration: textInputDecoration.copyWith(
                             hintText: 'Enter Address',
-                            labelText: 'Address',
+                            labelText: 'Address (Optional)',
                             hintStyle:
                                 GoogleFonts.poppins(textStyle: hintStyle),
                             labelStyle: GoogleFonts.poppins(
@@ -127,10 +125,8 @@ class _UserDataState extends State<UserData> {
                         child: FlatButton(
                           onPressed: () async {
                             if (_formKey.currentState.validate()) {
-                             await widget.updateUserData(name, des, add);
-                             
+                              await widget.updateUserData(name, des, add);
                             }
-                            
                           },
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0)),

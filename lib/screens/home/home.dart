@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:poolish/screens/test/test_screen.dart';
 import 'package:poolish/services/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:poolish/shared/loading.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -26,9 +27,7 @@ class _HomeState extends State<Home> {
       stream: widget.dB.userDataStream,
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return Center(
-            child: Text("Error Connecting to the Internet", style: errorStyle),
-          );
+          return Loading(message: "",);
         } else if (snapshot.data.data == null || snapshot.data.data['name']=="") {
           
           return UserData(updateUserData:widget.dB.updateUserDataDocument);
