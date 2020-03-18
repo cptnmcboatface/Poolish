@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:poolish/screens/authenticate/user_data_collection.dart';
 import 'package:poolish/shared/constants.dart';
 import 'package:poolish/services/auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:poolish/screens/test/test_screen.dart';
+import 'package:poolish/services/database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Home extends StatefulWidget {
   @override
   final String uid;
-  Home({this.uid});
+  var dB;
+  Home({this.uid}) {
+    dB = DatabaseService(uid: uid);
+  }
+
   _HomeState createState() => _HomeState();
 }
 
@@ -15,6 +22,30 @@ class _HomeState extends State<Home> {
   final AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
+    return StreamBuilder<DocumentSnapshot>(
+      stream: widget.dB.userDataStream,
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return Center(
+            child: Text("Error Connecting to the Internet", style: errorStyle),
+          );
+        } else if (snapshot.data.data == null || snapshot.data.data['name']=="") {
+          
+          return UserData(updateUserData:widget.dB.updateUserDataDocument);
+        } else {
+          DocumentSnapshot docs = snapshot.data;
+          var testResults = docs.data;
+          print(testResults);
+          print("HEREEE");
+          return homeScreen();
+        }
+
+        // return listsWidget(testResults);
+      },
+    );
+  }
+
+  Widget homeScreen() {
     return MaterialApp(
         title: "TestScreen SCREEN",
         home: Scaffold(
@@ -25,28 +56,24 @@ class _HomeState extends State<Home> {
                   backgroundColor: Colors.white,
                   elevation: 0.0,
                   flexibleSpace: Container(
-                    alignment: Alignment.center,
-                    child: Text("Poolish",
-                      style: GoogleFonts.dancingScript(
-                        textStyle: TextStyle(fontSize: 80, color: Colors.white),
-                      )),
+                      alignment: Alignment.center,
+                      child: Text("Poolish",
+                          style: GoogleFonts.dancingScript(
+                            textStyle:
+                                TextStyle(fontSize: 80, color: Colors.white),
+                          )),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(50)),
                           gradient: LinearGradient(colors: gradient)))),
             ),
             body: Container(
-              // margin: EdgeInsets.symmetric(vertical:20),
-              // padding: EdgeInsets.symmetric(vertical:20),
               alignment: Alignment.center,
               child: ListView(
                 physics: ClampingScrollPhysics(),
                 children: homeScreenCards(),
               ),
             )));
-    // Container(
-    //   child: TestScreen(uid:widget.uid),
-    // );
   }
 
   List<Widget> homeScreenCards() {
@@ -54,11 +81,31 @@ class _HomeState extends State<Home> {
 
     List<Widget> rows = [];
     var jobCategories = [
-      {"name": "Run Water Test", "icon": Icons.playlist_add_check,"id":HomeScreenID.test},
-      {"name": "Previous Results", "icon": Icons.history,"id":HomeScreenID.previousResults},
-      {"name": "Your Information", "icon": Icons.info_outline,"id":HomeScreenID.yourInfo},
-      {"name": "Change Settings", "icon": Icons.settings,"id":HomeScreenID.setting},
-      {"name": "Log Out", "icon": Icons.person_outline,"id":HomeScreenID.logOut}
+      {
+        "name": "Run Water Test",
+        "icon": Icons.playlist_add_check,
+        "id": HomeScreenID.test
+      },
+      {
+        "name": "Previous Results",
+        "icon": Icons.history,
+        "id": HomeScreenID.previousResults
+      },
+      {
+        "name": "Your Information",
+        "icon": Icons.info_outline,
+        "id": HomeScreenID.yourInfo
+      },
+      {
+        "name": "Change Settings",
+        "icon": Icons.settings,
+        "id": HomeScreenID.setting
+      },
+      {
+        "name": "Log Out",
+        "icon": Icons.person_outline,
+        "id": HomeScreenID.logOut
+      }
     ];
     int i = 0;
     for (var category in jobCategories) {
@@ -134,18 +181,48 @@ class _HomeState extends State<Home> {
           ),
         ));
   }
-  void changeScreen(var id){
 
-    if (id == HomeScreenID.logOut){
+  void changeScreen(var id) {
+    if (id == HomeScreenID.logOut) {
       _auth.signOut();
-    }else if( id== HomeScreenID.test){
+    } else if (id == HomeScreenID.test) {
       Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => TestScreen(
-                      uid: widget.uid,
-                    )),
-          );
+        context,
+        MaterialPageRoute(
+            builder: (context) => TestScreen(
+                  uid: widget.uid,
+                )),
+      );
+    } else if (id == HomeScreenID.yourInfo) {
+      return _settingModalBottomSheet(context);
     }
+  }
+
+  void _settingModalBottomSheet(context) {
+    showModalBottomSheet(
+        context: context,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        builder: (BuildContext context) {
+          return Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              // crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                ListTile(
+                  title: Text("Name",
+                      style: GoogleFonts.poppins(
+                        textStyle: TextStyle(fontSize: 20),
+                      )),
+                  leading: Icon(Icons.person),
+                  // subtitle: Text(,style: GoogleFonts.poppins(textStyle:TextStyle(fontSize: 17, color: Colors.grey),)),
+                )
+              ],
+            ),
+          );
+        });
   }
 }

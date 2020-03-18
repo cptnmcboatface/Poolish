@@ -4,10 +4,6 @@ import 'package:poolish/shared/loading.dart';
 import 'package:poolish/shared/constants.dart';
 import 'package:poolish/shared/login_register_design.dart';
 import 'package:google_fonts/google_fonts.dart';
-const CURVE_HEIGHT = 300.0;
-const AVATAR_RADIUS = CURVE_HEIGHT * 0.2;//CURVE_HEIGHT * 0.21;
-const AVATAR_DIAMETER = AVATAR_RADIUS * 2;
-
 
 class SignIn extends StatefulWidget {
   

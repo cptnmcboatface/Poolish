@@ -19,6 +19,7 @@ dynamic labelStyle = TextStyle(fontFamily: "GlacielIndifference", color: Color.f
 dynamic errorStyle = TextStyle(fontFamily: "GlacielIndifference", color: Colors.red[100],fontSize: 14);
 
 List<String> testNames = ["Free Chlorine","pH","Total Alkalinity","Hardness","Iron","Copper","Lead","Nitrate","Nitrite","Bromine","Total Chlorine","Chromiuim","Fluoride","Cyanuric Acid"];
+
 Map<String,List<String>> colorCodes={
   "pH":"EB596A ED636A ED7B67 ECA16E D5B663 ACB460 8FA460".split(" "),
   "Free Chlorine": "F9F9FA E5E9EC C2E1E8 8BCAD5 3D9BC7 1C7FBD 1A70B9".split(" "),
@@ -41,5 +42,11 @@ enum HomeScreenID {
    previousResults, 
    yourInfo, 
    setting,
-   logOut, 
+   logOut,
 }
+
+const CURVE_HEIGHT = 300.0;
+const AVATAR_RADIUS = CURVE_HEIGHT * 0.2;//CURVE_HEIGHT * 0.21;
+const AVATAR_DIAMETER = AVATAR_RADIUS * 2;
+
+var designations = ["Student","Teacher","Other"];
