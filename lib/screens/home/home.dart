@@ -21,6 +21,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final AuthService _auth = AuthService();
+  var add,name,des,email;
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<DocumentSnapshot>(
@@ -29,13 +30,14 @@ class _HomeState extends State<Home> {
         if (!snapshot.hasData) {
           return Loading(message: "",);
         } else if (snapshot.data.data == null || snapshot.data.data['name']=="") {
-          
           return UserData(updateUserData:widget.dB.updateUserDataDocument);
         } else {
           DocumentSnapshot docs = snapshot.data;
           var testResults = docs.data;
-          print(testResults);
-          print("HEREEE");
+          name=testResults["name"];
+          email=testResults["email"];
+          des=testResults["designation"];
+          add=testResults["address"];
           return homeScreen();
         }
 
@@ -189,7 +191,7 @@ class _HomeState extends State<Home> {
         context,
         MaterialPageRoute(
             builder: (context) => TestScreen(
-                  uid: widget.uid,
+                  dB: widget.dB,
                 )),
       );
     } else if (id == HomeScreenID.yourInfo) {
@@ -201,6 +203,7 @@ class _HomeState extends State<Home> {
     showModalBottomSheet(
         context: context,
         shape: RoundedRectangleBorder(
+          
           borderRadius: BorderRadius.circular(15.0),
         ),
         builder: (BuildContext context) {
@@ -208,17 +211,50 @@ class _HomeState extends State<Home> {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Column(
+
               mainAxisAlignment: MainAxisAlignment.start,
-              // crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch
+,
               children: <Widget>[
+                Container(child: Text("Your Information"),),
+                SizedBox(height: 10,),
                 ListTile(
                   title: Text("Name",
                       style: GoogleFonts.poppins(
-                        textStyle: TextStyle(fontSize: 20),
+                        textStyle: TextStyle(fontSize: 10,color: Colors.grey),
                       )),
-                  leading: Icon(Icons.person),
-                  // subtitle: Text(,style: GoogleFonts.poppins(textStyle:TextStyle(fontSize: 17, color: Colors.grey),)),
+                  leading: Icon(Icons.person,size: 40,color: mainThemeColor),
+                  subtitle: Text(name,style: GoogleFonts.poppins(textStyle:TextStyle(fontSize: 17, color: Colors.black),)),
+                ),
+                SizedBox(height: 10,)
+                ,
+                ListTile(
+                  title: Text("Email",
+                      style: GoogleFonts.poppins(
+                        textStyle: TextStyle(fontSize: 10,color: Colors.grey),
+                      )),
+                  leading: Icon(Icons.email,size: 40,color: mainThemeColor),
+                  subtitle: Text(email,style: GoogleFonts.poppins(textStyle:TextStyle(fontSize: 17, color: Colors.black),)),
+                ),
+                SizedBox(height: 10,),
+                ListTile(
+                  title: Text("You are a",
+                      style: GoogleFonts.poppins(
+                        textStyle: TextStyle(fontSize: 10,color: Colors.grey),
+                      )),
+                  leading:des!="Other"?Icon(Icons.school,size: 40,color: mainThemeColor):Icon(Icons.person_outline,size: 40,color: mainThemeColor),
+                  subtitle: Text(des,style: GoogleFonts.poppins(textStyle:TextStyle(fontSize: 17, color: Colors.black),)),
+                ),
+                SizedBox(height: 10,),
+                ListTile(
+                  title: Text("Adress",
+                      style: GoogleFonts.poppins(
+                        textStyle: TextStyle(fontSize: 10,color: Colors.grey),
+                      )),
+                  leading: Icon(Icons.home,size: 46,color: mainThemeColor,),
+                  subtitle: Text(add,style: GoogleFonts.poppins(textStyle:TextStyle(fontSize: 17, color: Colors.black),)),
                 )
+
               ],
             ),
           );

@@ -16,10 +16,11 @@ class DatabaseService {
                                           "designation" : "",
                                           "email" : email,
                                           "address" : "N/A"});
-
+    var myMap=new Map.fromIterables(testNames, data);
+    print({DateTime.now().toString():{"testVal":myMap,"completed":false}});
     return await testCollection
         .document(uid)
-        .setData(new Map.fromIterables(testNames, data));
+        .setData({DateTime.now().toString():{"testVal":myMap,"completed":false}});
   }
 
   Future<void> updateDocument(String testName, String selected) async {
