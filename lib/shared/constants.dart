@@ -39,6 +39,25 @@ Map<String,List<String>> colorCodes={
   "Lead":"F4AA62 F4944D EE7767 E0595E CE3E67 B1255".split(" ")
   };
 
+  Map<String,List<String>> colorCodesSafe={
+  "pH":"ED636A ED7B67 ECA16E".split(" "),
+  "Free Chlorine": "F9F9FA E5E9EC C2E1E8".split(" "),
+  "Total Alkalinity":"5D746C".split(" "),
+  "Hardness":"".split(" "),
+  "Iron":"F9F9FA".split(" "),
+  "Copper":"A29181".split(" "),
+  "Chromiuim":"eaa7cc".split(" "),
+  "Fluoride" : "d6413f".split(" "),
+  "Cyanuric Acid": "c31f3d c3203c".split(" "),
+  "Total Chlorine":"F9F9FA".split(" "),
+  "Nitrate":"F9F9FA F9F9F2".split(" "),
+  "Nitrite":"F9F9FA F6E7F1".split(" "),
+  "Bromine":"F9F9FA".split(" "),
+  "Lead":"F4AA62".split(" ")
+  };
+  bool safeOrNot(var testName, color){
+    return colorCodesSafe[testName].contains(color);
+  }
 enum HomeScreenID { 
    test, 
    previousResults, 

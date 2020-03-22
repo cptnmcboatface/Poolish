@@ -5,11 +5,11 @@ import 'package:poolish/shared/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:math';
 
-
 class TestsList extends StatefulWidget {
   var testListsStream;
   var updateDoc;
-  TestsList({this.testListsStream, this.updateDoc});
+  var addNewTest;
+  TestsList({this.testListsStream, this.updateDoc, this.addNewTest});
   @override
   _TestsListState createState() => _TestsListState();
 }
@@ -33,13 +33,14 @@ class _TestsListState extends State<TestsList> {
         keys.sort();
         var latestKey = keys.last.toString();
         var testResults;
-        
-        if(userTests[latestKey]["completed"]==false){
+
+        if (userTests[latestKey]["completed"] == false) {
           myKey = latestKey;
           testResults = userTests[latestKey]["testVal"];
+        } else {
+          myKey = returnTime();
+          widget.addNewTest(myKey);
         }
-        
-
         return new ListView.builder(
           physics: BouncingScrollPhysics(),
           itemCount: testResults.length,
@@ -63,32 +64,42 @@ class _TestsListState extends State<TestsList> {
 
   Widget listTile(String testName, String value) {
     return new ListTile(
-        contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ColorTestScreen(
-                      testName: testName,
-                      val: value,
-                      updateVal: updateVal,
-                    )),
-          );
-        },
-        trailing: new Container(
-            margin: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-            child: (value == "" || value == null)
-                ? (Icon(
-                    Icons.cancel,
-                    color: Colors.black,
-                  ))
-                : (Icon(
-                    Icons.check_circle_outline,
-                    color: mainThemeColor,
-                  ))),
-        title: new Text(testName,
-            style: GoogleFonts.poppins(
-                textStyle: TextStyle(color: Colors.black, fontSize: 20))));
+      contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ColorTestScreen(
+                    testName: testName,
+                    val: value,
+                    updateVal: updateVal,
+                  )),
+        );
+      },
+      trailing: new Container(
+          margin: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+          child: (value == "" || value == null)
+              ? (Icon(
+                  Icons.cancel,
+                  color: Colors.black,
+                ))
+              : (Icon(
+                  Icons.check_circle_outline,
+                  color: mainThemeColor,
+                ))),
+      title: new Text(testName,
+          style: GoogleFonts.poppins(
+              textStyle: TextStyle(color: Colors.black, fontSize: 20))),
+      subtitle: (value == "" || value == null)
+          ? Text("")
+          : safeOrNot(testName, value)
+              ? Text("Safe",
+                  style: GoogleFonts.poppins(
+                      textStyle: TextStyle(color: mainThemeColor)))
+              : Text("Unafe",
+                  style: GoogleFonts.poppins(
+                      textStyle: TextStyle(color: Colors.red))),
+    );
   }
 
   void updateVal(String test, String selected) async {

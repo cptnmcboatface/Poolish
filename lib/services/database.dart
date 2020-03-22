@@ -28,6 +28,12 @@ class DatabaseService {
         key+".testVal."+testName:selected
       });
   }
+  Future addNewTest(String key) async {
+    var data = List<String>.filled(testNames.length, null);
+    var myMap=new Map.fromIterables(testNames, data);
+
+    return await testCollection.document(uid).updateData({key:{"testVal":myMap,"completed":false}});
+  }
   
   Future<void> updateUserDataDocument(var name, var des, var add) async {
     return _firestore.collection('users').document(uid).updateData({
