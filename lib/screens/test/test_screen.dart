@@ -4,7 +4,6 @@ import 'package:poolish/shared/constants.dart';
 import 'package:poolish/screens/test/test_list.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
 class TestScreen extends StatefulWidget {
   String uid;
 
@@ -18,7 +17,7 @@ class TestScreen extends StatefulWidget {
 }
 
 class _TestScreenState extends State<TestScreen> {
-  bool runTest = true;
+  bool runTest = false;
   final AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
@@ -44,23 +43,25 @@ class _TestScreenState extends State<TestScreen> {
             flexibleSpace: Container(
                 decoration:
                     BoxDecoration(gradient: LinearGradient(colors: gradient)))),
-        floatingActionButton: FloatingActionButton.extended(
-          elevation: 0.0,
-          label: Text(
-                  'Run Test',
-                  style: GoogleFonts.poppins(
-                      textStyle: TextStyle(
-                          color: runTest?Colors.white:Color.fromRGBO(0, 0, 0, 0.5),
-                          fontSize: 20))),
-          onPressed: () {
-            // Add your onPressed code here!
-          },
-          icon: Icon(
-            Icons.scatter_plot,
-            size: 30,
-            color:runTest?Colors.white:Color.fromRGBO(0, 0, 0, 0.5)
+        floatingActionButton: Visibility(
+          visible: runTest,
+                  child: FloatingActionButton.extended(
+            elevation: 0.0,
+            label: Text('Run Test',
+                style: GoogleFonts.poppins(
+                    textStyle: TextStyle(
+                        color:
+                            runTest ? Colors.white : Color.fromRGBO(0, 0, 0, 0.5),
+                        fontSize: 20))),
+            onPressed: () {
+              // Add your onPressed code here!
+            },
+            icon: Icon(Icons.scatter_plot,
+                size: 30,
+                color: runTest ? Colors.white : Color.fromRGBO(0, 0, 0, 0.5)),
+            backgroundColor:
+                runTest ? mainThemeColor : Color.fromRGBO(217, 217, 217, 0.3),
           ),
-          backgroundColor: runTest?mainThemeColor:Color.fromRGBO(217, 217, 217, 0.3),
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -79,14 +80,20 @@ class _TestScreenState extends State<TestScreen> {
             Expanded(
               child: Container(
                   child: TestsList(
-                testListsStream: widget.dB.testList,
-                updateDoc: widget.dB.updateDocument,
-                addNewTest: widget.dB.addNewTest,
-              )),
+                      testListsStream: widget.dB.testList,
+                      updateDoc: widget.dB.updateDocument,
+                      addNewTest: widget.dB.addNewTest,
+                      toggleRunTest: toggleRunTest)),
             ),
           ],
         ),
       ),
     );
+  }
+
+  void toggleRunTest(sate) {
+    setState(() {
+      runTest = sate;
+    });
   }
 }

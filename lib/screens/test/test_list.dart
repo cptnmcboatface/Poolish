@@ -9,7 +9,8 @@ class TestsList extends StatefulWidget {
   var testListsStream;
   var updateDoc;
   var addNewTest;
-  TestsList({this.testListsStream, this.updateDoc, this.addNewTest});
+  var toggleRunTest;
+  TestsList({this.testListsStream, this.updateDoc, this.addNewTest,this.toggleRunTest});
   @override
   _TestsListState createState() => _TestsListState();
 }
