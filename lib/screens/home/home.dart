@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:poolish/screens/authenticate/user_data_collection.dart';
+import 'package:poolish/screens/home/user_info_dropdown.dart';
 import 'package:poolish/shared/constants.dart';
 import 'package:poolish/services/auth.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -21,23 +22,26 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final AuthService _auth = AuthService();
-  var add,name,des,email;
+  var add = "", name = "", des = "", email = "";
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<DocumentSnapshot>(
       stream: widget.dB.userDataStream,
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return Loading(message: "",);
-        } else if (snapshot.data.data == null || snapshot.data.data['name']=="") {
-          return UserData(updateUserData:widget.dB.updateUserDataDocument);
+          return Loading(
+            message: "",
+          );
+        } else if (snapshot.data.data == null ||
+            snapshot.data.data['name'] == "") {
+          return UserData(updateUserData: widget.dB.updateUserDataDocument);
         } else {
           DocumentSnapshot docs = snapshot.data;
           var testResults = docs.data;
-          name=testResults["name"];
-          email=testResults["email"];
-          des=testResults["designation"];
-          add=testResults["address"];
+          name = testResults["name"];
+          email = testResults["email"];
+          des = testResults["designation"];
+          add = testResults["address"];
           return homeScreen();
         }
 
@@ -195,69 +199,7 @@ class _HomeState extends State<Home> {
                 )),
       );
     } else if (id == HomeScreenID.yourInfo) {
-      return _settingModalBottomSheet(context);
+      return settingModalBottomSheet(context, des, name, add, email);
     }
-  }
-
-  void _settingModalBottomSheet(context) {
-    showModalBottomSheet(
-        context: context,
-        shape: RoundedRectangleBorder(
-          
-          borderRadius: BorderRadius.circular(15.0),
-        ),
-        builder: (BuildContext context) {
-          return Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: Column(
-
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.stretch
-,
-              children: <Widget>[
-                Container(child: Text("Your Information"),),
-                SizedBox(height: 10,),
-                ListTile(
-                  title: Text("Name",
-                      style: GoogleFonts.poppins(
-                        textStyle: TextStyle(fontSize: 10,color: Colors.grey),
-                      )),
-                  leading: Icon(Icons.person,size: 40,color: mainThemeColor),
-                  subtitle: Text(name,style: GoogleFonts.poppins(textStyle:TextStyle(fontSize: 17, color: Colors.black),)),
-                ),
-                SizedBox(height: 10,)
-                ,
-                ListTile(
-                  title: Text("Email",
-                      style: GoogleFonts.poppins(
-                        textStyle: TextStyle(fontSize: 10,color: Colors.grey),
-                      )),
-                  leading: Icon(Icons.email,size: 40,color: mainThemeColor),
-                  subtitle: Text(email,style: GoogleFonts.poppins(textStyle:TextStyle(fontSize: 17, color: Colors.black),)),
-                ),
-                SizedBox(height: 10,),
-                ListTile(
-                  title: Text("You are a",
-                      style: GoogleFonts.poppins(
-                        textStyle: TextStyle(fontSize: 10,color: Colors.grey),
-                      )),
-                  leading:des!="Other"?Icon(Icons.school,size: 40,color: mainThemeColor):Icon(Icons.person_outline,size: 40,color: mainThemeColor),
-                  subtitle: Text(des,style: GoogleFonts.poppins(textStyle:TextStyle(fontSize: 17, color: Colors.black),)),
-                ),
-                SizedBox(height: 10,),
-                ListTile(
-                  title: Text("Adress",
-                      style: GoogleFonts.poppins(
-                        textStyle: TextStyle(fontSize: 10,color: Colors.grey),
-                      )),
-                  leading: Icon(Icons.home,size: 46,color: mainThemeColor,),
-                  subtitle: Text(add,style: GoogleFonts.poppins(textStyle:TextStyle(fontSize: 17, color: Colors.black),)),
-                )
-
-              ],
-            ),
-          );
-        });
   }
 }

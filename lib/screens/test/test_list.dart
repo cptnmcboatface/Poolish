@@ -3,6 +3,8 @@ import 'package:poolish/screens/test/color_test.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:poolish/shared/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'dart:math';
+
 
 class TestsList extends StatefulWidget {
   var testListsStream;
@@ -13,6 +15,7 @@ class TestsList extends StatefulWidget {
 }
 
 class _TestsListState extends State<TestsList> {
+  String myKey;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,10 +27,19 @@ class _TestsListState extends State<TestsList> {
             child: Text("Error Connecting to the Internet", style: errorStyle),
           );
         DocumentSnapshot docs = snapshot.data;
-        var testResults = docs.data;
-        if(testResults["Soucrce"]==""){
-          
+        var userTests = docs.data;
+        List<String> keys = userTests.keys.toList();
+        keys.map(DateTime.parse);
+        keys.sort();
+        var latestKey = keys.last.toString();
+        var testResults;
+        
+        if(userTests[latestKey]["completed"]==false){
+          myKey = latestKey;
+          testResults = userTests[latestKey]["testVal"];
         }
+        
+
         return new ListView.builder(
           physics: BouncingScrollPhysics(),
           itemCount: testResults.length,
@@ -80,6 +92,6 @@ class _TestsListState extends State<TestsList> {
   }
 
   void updateVal(String test, String selected) async {
-    await widget.updateDoc(test, selected);
+    await widget.updateDoc(test, selected, myKey);
   }
 }

@@ -17,17 +17,18 @@ class DatabaseService {
                                           "email" : email,
                                           "address" : "N/A"});
     var myMap=new Map.fromIterables(testNames, data);
-    print({DateTime.now().toString():{"testVal":myMap,"completed":false}});
     return await testCollection
         .document(uid)
-        .setData({DateTime.now().toString():{"testVal":myMap,"completed":false}});
+        .setData({returnTime():{"testVal":myMap,"completed":false}});
   }
 
-  Future<void> updateDocument(String testName, String selected) async {
-    return _firestore.collection('tests').document(uid).updateData({
-      testName: selected,
-    });
+  Future<void> updateDocument(String testName, String selected,key) async {
+    return _firestore.collection('tests').document(uid).updateData(
+      {
+        key+".testVal."+testName:selected
+      });
   }
+  
   Future<void> updateUserDataDocument(var name, var des, var add) async {
     return _firestore.collection('users').document(uid).updateData({
       "name":name,
@@ -40,6 +41,6 @@ class DatabaseService {
     return _firestore.collection('tests').document(uid).snapshots();
   }
   Stream<DocumentSnapshot> get userDataStream {
-    return _firestore.collection('users').document(uid).snapshots();
+    return _firestore.collection('users').document(uid).snapshots();//snapshots();
   }
 }

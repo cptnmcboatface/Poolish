@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:jiffy/jiffy.dart';
+
 
 
 const textInputDecoration =  InputDecoration(
@@ -50,3 +52,8 @@ const AVATAR_RADIUS = CURVE_HEIGHT * 0.2;//CURVE_HEIGHT * 0.21;
 const AVATAR_DIAMETER = AVATAR_RADIUS * 2;
 
 var designations = ["Student","Teacher","Other"];
+
+String returnTime(){
+  var now = Jiffy().format("yyyy-MM-dd HH:mm:ss");
+  return now;
+}

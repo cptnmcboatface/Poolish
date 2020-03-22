@@ -7,6 +7,7 @@ import 'package:poolish/services/database.dart';
 
 class TestScreen extends StatefulWidget {
   String uid;
+  
   var dB;
   TestScreen({this.dB}){
      uid = dB.uid;
