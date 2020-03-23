@@ -12,7 +12,6 @@ class UserData extends StatefulWidget {
 
 class _UserDataState extends State<UserData> {
   String name, add, des;
-
   var _currentSelectedValue;
   final _formKey = GlobalKey<FormState>();
 
