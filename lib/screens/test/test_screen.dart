@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:poolish/screens/results/results.dart';
 import 'package:poolish/services/auth.dart';
 import 'package:poolish/shared/constants.dart';
 import 'package:poolish/screens/test/test_list.dart';
@@ -17,8 +18,8 @@ class TestScreen extends StatefulWidget {
 }
 
 class _TestScreenState extends State<TestScreen> {
+  var testList;
   bool runTest = false;
-  final AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -34,6 +35,18 @@ class _TestScreenState extends State<TestScreen> {
               ),
               shape: new CircleBorder(),
             ),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.arrow_forward_ios),
+                onPressed: () {                  
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ResultScreen(testList: testList),
+                  ));
+                },
+              ),
+            ],
             title: Text("Pool Tests",
                 style: GoogleFonts.poppins(
                   textStyle: TextStyle(fontSize: 40, color: Colors.white),
@@ -43,26 +56,26 @@ class _TestScreenState extends State<TestScreen> {
             flexibleSpace: Container(
                 decoration:
                     BoxDecoration(gradient: LinearGradient(colors: gradient)))),
-        floatingActionButton: Visibility(
-          visible: runTest,
-                  child: FloatingActionButton.extended(
-            elevation: 0.0,
-            label: Text('Run Test',
-                style: GoogleFonts.poppins(
-                    textStyle: TextStyle(
-                        color:
-                            runTest ? Colors.white : Color.fromRGBO(0, 0, 0, 0.5),
-                        fontSize: 20))),
-            onPressed: () {
-              // Add your onPressed code here!
-            },
-            icon: Icon(Icons.scatter_plot,
-                size: 30,
-                color: runTest ? Colors.white : Color.fromRGBO(0, 0, 0, 0.5)),
-            backgroundColor:
-                runTest ? mainThemeColor : Color.fromRGBO(217, 217, 217, 0.3),
-          ),
-        ),
+        // floatingActionButton: Visibility(
+        //   visible: runTest,
+        //           child: FloatingActionButton.extended(
+        //     elevation: 0.0,
+        //     label: Text('Run Test',
+        //         style: GoogleFonts.poppins(
+        //             textStyle: TextStyle(
+        //                 color:
+        //                     runTest ? Colors.white : Color.fromRGBO(0, 0, 0, 0.5),
+        //                 fontSize: 20))),
+        //     onPressed: () {
+        //       // Add your onPressed code here!
+        //     },
+        //     icon: Icon(Icons.scatter_plot,
+        //         size: 30,
+        //         color: runTest ? Colors.white : Color.fromRGBO(0, 0, 0, 0.5)),
+        //     backgroundColor:
+        //         runTest ? mainThemeColor : Color.fromRGBO(217, 217, 217, 0.3),
+        //   ),
+        // ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
@@ -83,7 +96,7 @@ class _TestScreenState extends State<TestScreen> {
                       testListsStream: widget.dB.testList,
                       updateDoc: widget.dB.updateDocument,
                       addNewTest: widget.dB.addNewTest,
-                      toggleRunTest: toggleRunTest)),
+                      setTestList: setTestList)),
             ),
           ],
         ),
@@ -91,9 +104,14 @@ class _TestScreenState extends State<TestScreen> {
     );
   }
 
-  void toggleRunTest(sate) {
-    setState(() {
-      runTest = sate;
-    });
+  // void toggleRunTest(sate) {
+  //   setState(() {
+  //     runTest = sate;
+  //   });
+  // }
+  void setTestList(var l){
+    
+    testList = l;
+    // print(testList);
   }
 }

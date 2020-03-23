@@ -3,14 +3,17 @@ import 'package:poolish/screens/test/color_test.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:poolish/shared/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'dart:math';
 
 class TestsList extends StatefulWidget {
   var testListsStream;
   var updateDoc;
   var addNewTest;
-  var toggleRunTest;
-  TestsList({this.testListsStream, this.updateDoc, this.addNewTest,this.toggleRunTest});
+  var setTestList;
+  TestsList(
+      {this.testListsStream,
+      this.updateDoc,
+      this.addNewTest,
+      this.setTestList});
   @override
   _TestsListState createState() => _TestsListState();
 }
@@ -42,6 +45,7 @@ class _TestsListState extends State<TestsList> {
           myKey = returnTime();
           widget.addNewTest(myKey);
         }
+        widget.setTestList(userTests[latestKey]["testVal"]);
         return new ListView.builder(
           physics: BouncingScrollPhysics(),
           itemCount: testResults.length,

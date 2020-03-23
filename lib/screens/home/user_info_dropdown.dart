@@ -46,7 +46,7 @@ void settingModalBottomSheet(context, var des,name,add,email) {
                         textStyle: TextStyle(fontSize: 10,color: Colors.grey),
                       )),
                   leading:des!="Other"?Icon(Icons.school,size: 40,color: mainThemeColor):Icon(Icons.person_outline,size: 40,color: mainThemeColor),
-                  subtitle: Text(des,style: GoogleFonts.poppins(textStyle:TextStyle(fontSize: 17, color: Colors.black),)),
+                  subtitle: Text(des==null?"N/A":des,style: GoogleFonts.poppins(textStyle:TextStyle(fontSize: 17, color: Colors.black),)),
                 ),
                 SizedBox(height: 10,),
                 ListTile(

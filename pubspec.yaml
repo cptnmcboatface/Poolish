@@ -31,6 +31,10 @@ dependencies:
   google_fonts: ^0.3.9
   flutter_form_builder: ^3.8.1
   jiffy: ^3.0.1
+  syncfusion_flutter_charts: ^18.1.36
+  fl_chart: ^0.8.6
+
+
 
 
 

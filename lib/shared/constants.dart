@@ -65,6 +65,10 @@ enum HomeScreenID {
    setting,
    logOut,
 }
+enum ResultsScreenMode { 
+   testScreen,
+   homeScreen, 
+}
 
 const CURVE_HEIGHT = 300.0;
 const AVATAR_RADIUS = CURVE_HEIGHT * 0.2;//CURVE_HEIGHT * 0.21;
@@ -76,3 +80,6 @@ String returnTime(){
   var now = Jiffy().format("yyyy-MM-dd HH:mm:ss");
   return now;
 }
+
+List unsafeGradient = <Color>[Color.fromRGBO(244, 67, 54,0.7),Color.fromRGBO(244, 67, 54,0),Color.fromRGBO(244, 67, 54,0)];
+

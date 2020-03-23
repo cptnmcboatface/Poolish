@@ -14,6 +14,7 @@ class Home extends StatefulWidget {
   final String uid;
   var dB;
   Home({this.uid}) {
+    
     dB = DatabaseService(uid: uid);
   }
 
