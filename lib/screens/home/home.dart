@@ -194,7 +194,11 @@ class _HomeState extends State<Home> {
 
   void changeScreen(var id) {
     if (id == HomeScreenID.logOut) {
-      _auth.signOut();
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => confirmLogout(context),
+      );
+      // _auth.signOut();
     } else if (id == HomeScreenID.test) {
       Navigator.push(
         context,
@@ -211,5 +215,37 @@ class _HomeState extends State<Home> {
         MaterialPageRoute(builder: (context) => History(dB: dB)),
       );
     }
+  }
+  Widget confirmLogout(BuildContext context) {
+    return new AlertDialog(
+      shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+      title: Text('Are you leaving?',style: GoogleFonts.poppins(textStyle: TextStyle(color: mainThemeColor),)),
+      content: new Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text('You are logging out. All your data will be saved.',style: GoogleFonts.poppins(textStyle: TextStyle(color: Color.fromRGBO(166, 166, 166, 1)),))
+        ],
+      ),
+      actions: <Widget>[
+        FlatButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+            _auth.signOut();
+          },
+          textColor: Theme.of(context).primaryColor,
+          child: Text('Yes',style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black))),
+        ),
+        FlatButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          textColor: Theme.of(context).primaryColor,
+          child: Text('No',style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black))),
+        ),
+      ],
+    );
   }
 }

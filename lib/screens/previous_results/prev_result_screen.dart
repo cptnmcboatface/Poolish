@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:poolish/screens/results/results.dart';
-import 'package:poolish/screens/test_result/results.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:poolish/services/database.dart';
 import 'package:poolish/shared/constants.dart';
@@ -47,15 +46,13 @@ class _HistoryState extends State<History> {
                       child: Text("Error Connecting to the Internet",
                           style: errorStyle),
                     );
-                  print("JEREE");
                   DocumentSnapshot docs = snapshot.data;
                   var userTests = docs.data;
                   List<String> keys = userTests.keys.toList();
                   keys.map(DateTime.parse);
                   keys.sort();
                   keys = keys.reversed.toList();
-                  keys.removeWhere((item) => userTests[item]["completed"]);
-
+                  keys.removeWhere((item) => !userTests[item]["completed"]);
 
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -75,26 +72,35 @@ class _HistoryState extends State<History> {
                             // style: ,
                           )),
                       Expanded(
-                        child: Container(
-                          // height: 400,
-                          child: new ListView.builder(
-                            physics: BouncingScrollPhysics(),
-                            itemCount: userTests.keys.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              String key = keys.elementAt(index);
-                              return new Column(
-                                children: <Widget>[
-                                  myListTile(key, userTests[key]["testVal"]),
-                                  // listTile(key, testResults[key]),
-                                  Container(
-                                    height: 5.0,
-                                    color: Color.fromRGBO(217, 217, 217, 1.0),
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
-                        ),
+                        child: keys.length > 0
+                            ? Container(
+                                // height: 400,
+                                child: new ListView.builder(
+                                  physics: BouncingScrollPhysics(),
+                                  itemCount: keys.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    String key = keys.elementAt(index);
+                                    return new Column(
+                                      children: <Widget>[
+                                        myListTile(
+                                            key, userTests[key]["testVal"]),
+                                        // listTile(key, testResults[key]),
+                                        Container(
+                                          height: 5.0,
+                                          color: Color.fromRGBO(
+                                              217, 217, 217, 1.0),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ),
+                              )
+                            : Container(
+                              alignment: Alignment.center,
+                              width: double.infinity,
+                              child: Text("You Currently dont have any past tests",style: GoogleFonts.poppins(),),
+                            ),
                       )
                     ],
                   );

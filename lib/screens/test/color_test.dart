@@ -97,10 +97,10 @@ Widget tileWidget(List colors, int iter){
     height: double.infinity,
     width: 100,
     
-    child: FlatButton(onPressed: (){
-      // c==widget.val?widget.updateVal(widget.testName,null):widget.updateVal(widget.testName,c);
+    child: FlatButton(onPressed: () async {
+
       widget.updateVal(widget.testName,c);
-      Navigator.pop(context);
+      Navigator.pop(context);              
     }, child: null)
 
     );
