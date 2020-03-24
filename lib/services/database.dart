@@ -42,6 +42,12 @@ class DatabaseService {
       "address":add,
     });
   }
+  Future<void> completeTest(var key){
+    return _firestore.collection('tests').document(uid).updateData(
+      {
+        key+".completed":true
+      });
+  }
 
   Stream<DocumentSnapshot> get testList {
     return _firestore.collection('tests').document(uid).snapshots();
@@ -49,4 +55,5 @@ class DatabaseService {
   Stream<DocumentSnapshot> get userDataStream {
     return _firestore.collection('users').document(uid).snapshots();//snapshots();
   }
+
 }

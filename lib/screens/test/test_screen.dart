@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:poolish/screens/results/results.dart';
-import 'package:poolish/services/auth.dart';
+import 'package:poolish/services/database.dart';
 import 'package:poolish/shared/constants.dart';
 import 'package:poolish/screens/test/test_list.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TestScreen extends StatefulWidget {
-  String uid;
+  
 
-  var dB;
-  TestScreen({this.dB}) {
-    uid = dB.uid;
-  }
+  final DatabaseService dB;
+  TestScreen({this.dB});
 
   @override
   _TestScreenState createState() => _TestScreenState();
@@ -19,6 +17,7 @@ class TestScreen extends StatefulWidget {
 
 class _TestScreenState extends State<TestScreen> {
   var testList;
+  var resKey;
   bool runTest = false;
   @override
   Widget build(BuildContext context) {
@@ -42,7 +41,7 @@ class _TestScreenState extends State<TestScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => ResultScreen(testList: testList),
+                        builder: (context) => ResultScreen(testList: testList, dB: widget.dB,mode:0, resultKey: resKey,),
                   ));
                 },
               ),
@@ -56,26 +55,6 @@ class _TestScreenState extends State<TestScreen> {
             flexibleSpace: Container(
                 decoration:
                     BoxDecoration(gradient: LinearGradient(colors: gradient)))),
-        // floatingActionButton: Visibility(
-        //   visible: runTest,
-        //           child: FloatingActionButton.extended(
-        //     elevation: 0.0,
-        //     label: Text('Run Test',
-        //         style: GoogleFonts.poppins(
-        //             textStyle: TextStyle(
-        //                 color:
-        //                     runTest ? Colors.white : Color.fromRGBO(0, 0, 0, 0.5),
-        //                 fontSize: 20))),
-        //     onPressed: () {
-        //       // Add your onPressed code here!
-        //     },
-        //     icon: Icon(Icons.scatter_plot,
-        //         size: 30,
-        //         color: runTest ? Colors.white : Color.fromRGBO(0, 0, 0, 0.5)),
-        //     backgroundColor:
-        //         runTest ? mainThemeColor : Color.fromRGBO(217, 217, 217, 0.3),
-        //   ),
-        // ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
@@ -109,9 +88,10 @@ class _TestScreenState extends State<TestScreen> {
   //     runTest = sate;
   //   });
   // }
-  void setTestList(var l){
+  void setTestList(var l,resultKey){
     
     testList = l;
+    resKey = resultKey;
     // print(testList);
   }
 }

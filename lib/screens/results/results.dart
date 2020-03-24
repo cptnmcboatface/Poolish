@@ -1,19 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:poolish/services/database.dart';
 import 'package:poolish/shared/constants.dart';
 import 'package:poolish/screens/results/chart.dart';
 
 class ResultScreen extends StatefulWidget {
-  var testList;
+  final Map testList;
+  final DatabaseService dB;
+  final int mode;
+  final String resultKey;
   @override
-  ResultScreen({Key key,@required this.testList}): super(key: key);
+  ResultScreen(
+      {Key key,
+      @required this.testList,
+      @required this.dB,
+      @required this.mode,
+      @required this.resultKey})
+      : super(key: key);
   _ResultScreenState createState() => _ResultScreenState();
 }
 
 class _ResultScreenState extends State<ResultScreen> {
   @override
   Widget build(BuildContext context) {
-    
     return MaterialApp(
       title: "TestScreen SCREEN",
       home: Scaffold(
@@ -23,20 +32,23 @@ class _ResultScreenState extends State<ResultScreen> {
               onPressed: () => Navigator.pop(context),
               child: Icon(
                 Icons.arrow_back_ios,
-
                 color: Colors.white,
               ),
               shape: new CircleBorder(),
             ),
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.arrow_forward_ios),
-                onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                },
-              )
-            ],
+            actions: widget.mode == 0
+                ? <Widget>[
+                    IconButton(
+                      icon: Icon(Icons.arrow_forward_ios),
+                      onPressed: () {
+                        print(widget.resultKey);
+                        widget.dB.completeTest(widget.resultKey);
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      },
+                    )
+                  ]
+                : <Widget>[],
             title: Text("Pool Tests",
                 style: GoogleFonts.poppins(
                   textStyle: TextStyle(fontSize: 40, color: Colors.white),

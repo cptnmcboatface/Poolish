@@ -5,7 +5,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:poolish/shared/constants.dart';
 
 class MyPieChart extends StatefulWidget {
-  var dataMap;
+  final Map dataMap;
   @override
   MyPieChart({this.dataMap});
   _MyPieChartState createState() => _MyPieChartState();

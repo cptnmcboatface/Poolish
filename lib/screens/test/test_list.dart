@@ -5,10 +5,10 @@ import 'package:poolish/shared/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TestsList extends StatefulWidget {
-  var testListsStream;
-  var updateDoc;
-  var addNewTest;
-  var setTestList;
+  final Stream testListsStream;
+  final Function updateDoc;
+  final Function addNewTest;
+  final Function setTestList;
   TestsList(
       {this.testListsStream,
       this.updateDoc,
@@ -45,7 +45,7 @@ class _TestsListState extends State<TestsList> {
           myKey = returnTime();
           widget.addNewTest(myKey);
         }
-        widget.setTestList(userTests[latestKey]["testVal"]);
+        widget.setTestList(userTests[latestKey]["testVal"], latestKey);
         return new ListView.builder(
           physics: BouncingScrollPhysics(),
           itemCount: testResults.length,

@@ -4,7 +4,7 @@ import 'package:poolish/shared/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class UserData extends StatefulWidget {
-  var updateUserData;
+  final Function updateUserData;
   UserData({this.updateUserData});
   @override
   _UserDataState createState() => _UserDataState();

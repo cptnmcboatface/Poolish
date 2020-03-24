@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:poolish/screens/authenticate/user_data_collection.dart';
 import 'package:poolish/screens/home/user_info_dropdown.dart';
+import 'package:poolish/screens/previous_results/prev_result_screen.dart';
 import 'package:poolish/shared/constants.dart';
 import 'package:poolish/services/auth.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,24 +11,27 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:poolish/shared/loading.dart';
 
 class Home extends StatefulWidget {
-  @override
   final String uid;
-  var dB;
-  Home({this.uid}) {
-    
-    dB = DatabaseService(uid: uid);
-  }
+  @override
+  Home({this.uid});
 
-  _HomeState createState() => _HomeState();
+  _HomeState createState() => _HomeState(uid: uid);
 }
 
 class _HomeState extends State<Home> {
+  final String uid;
+  DatabaseService dB;
+
+  _HomeState({this.uid}) {
+    dB = DatabaseService(uid: uid);
+  }
+
   final AuthService _auth = AuthService();
   var add = "", name = "", des = "", email = "";
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<DocumentSnapshot>(
-      stream: widget.dB.userDataStream,
+      stream: dB.userDataStream,
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Loading(
@@ -35,7 +39,7 @@ class _HomeState extends State<Home> {
           );
         } else if (snapshot.data.data == null ||
             snapshot.data.data['name'] == "") {
-          return UserData(updateUserData: widget.dB.updateUserDataDocument);
+          return UserData(updateUserData: dB.updateUserDataDocument);
         } else {
           DocumentSnapshot docs = snapshot.data;
           var testResults = docs.data;
@@ -196,11 +200,16 @@ class _HomeState extends State<Home> {
         context,
         MaterialPageRoute(
             builder: (context) => TestScreen(
-                  dB: widget.dB,
+                  dB: dB,
                 )),
       );
     } else if (id == HomeScreenID.yourInfo) {
       return settingModalBottomSheet(context, des, name, add, email);
+    } else if (id == HomeScreenID.previousResults) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => History(dB: dB)),
+      );
     }
   }
 }
