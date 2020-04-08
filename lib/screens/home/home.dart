@@ -216,6 +216,7 @@ class _HomeState extends State<Home> {
       );
     }
   }
+  
   Widget confirmLogout(BuildContext context) {
     return new AlertDialog(
       shape: RoundedRectangleBorder(

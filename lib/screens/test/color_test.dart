@@ -71,7 +71,6 @@ Widget rowWidget(List colors, int iter){
   }
 
   return new Container(
-    height: 100,
     margin: EdgeInsets.all(10.0),
 
     child: new Row(
@@ -90,17 +89,17 @@ Widget tileWidget(List colors, int iter){
    return new Container(
     decoration: BoxDecoration(
       color: col,
-      border: Border.all(width: 3.0,color:c==widget.val? mainThemeColor:Colors.black,),
+      border: Border.all(width: 1.5,color:c==widget.val? mainThemeColor:Colors.black,),
   
-    borderRadius: BorderRadius.all(Radius.circular(5.0))
+    borderRadius: BorderRadius.all(Radius.circular(1.0))
     ), 
-    height: double.infinity,
-    width: 100,
+    height: c==widget.val?110:100,
+    width: c==widget.val?110:100,
     
     child: FlatButton(onPressed: () async {
 
       widget.updateVal(widget.testName,c);
-      Navigator.pop(context);              
+      Navigator.pop(context);       
     }, child: null)
 
     );
