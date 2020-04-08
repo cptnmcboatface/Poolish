@@ -148,6 +148,7 @@ class _SignInState extends State<SignIn> {
                   ),
                 ),
               ),
+              
               FlatButton(onPressed: (){
                 widget.toggleView();
               }, child: Text(

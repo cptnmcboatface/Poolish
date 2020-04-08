@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:poolish/shared/constants.dart';
 
-void settingModalBottomSheet(context, var des,name,add,email) {
+void userInfoModalBottomSheet(context, var des,name,add,email) {
     showModalBottomSheet(
         context: context,
         shape: RoundedRectangleBorder(
@@ -19,7 +19,7 @@ void settingModalBottomSheet(context, var des,name,add,email) {
               crossAxisAlignment: CrossAxisAlignment.stretch
 ,
               children: <Widget>[
-                Container(child: Text("Your Information"),),
+                Container(child: Text("Your Information", style: GoogleFonts.poppins(),),),
                 SizedBox(height: 10,),
                 ListTile(
                   title: Text("Name",

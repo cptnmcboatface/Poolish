@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:poolish/screens/authenticate/user_data_collection.dart';
+import 'package:poolish/screens/home/setting_dropdown.dart';
 import 'package:poolish/screens/home/user_info_dropdown.dart';
 import 'package:poolish/screens/previous_results/prev_result_screen.dart';
 import 'package:poolish/shared/constants.dart';
@@ -208,15 +209,18 @@ class _HomeState extends State<Home> {
                 )),
       );
     } else if (id == HomeScreenID.yourInfo) {
-      return settingModalBottomSheet(context, des, name, add, email);
+      return userInfoModalBottomSheet(context, des, name, add, email);
     } else if (id == HomeScreenID.previousResults) {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => History(dB: dB)),
       );
+    }else if (id == HomeScreenID.setting){
+      
+      return settingModalBottomSheet(context, des, name, add==null?"N/A":add , email,dB.updateUserDataDocument);
     }
   }
-  
+
   Widget confirmLogout(BuildContext context) {
     return new AlertDialog(
       shape: RoundedRectangleBorder(
