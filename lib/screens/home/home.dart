@@ -10,6 +10,9 @@ import 'package:poolish/screens/test/test_screen.dart';
 import 'package:poolish/services/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:poolish/shared/loading.dart';
+import 'package:poolish/screens/test/test_source.dart';
+// import 'water_source.dart';
+import 'package:dropdownfield/dropdownfield.dart';
 
 class Home extends StatefulWidget {
   final String uid;
@@ -20,8 +23,11 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final _formKey = GlobalKey<FormState>();
   final String uid;
   DatabaseService dB;
+  String watersource = "";
+  List<String> options = ["Pool", "Bottled water", "Tap water", "Bore water"];
 
   _HomeState({this.uid}) {
     dB = DatabaseService(uid: uid);
@@ -193,7 +199,7 @@ class _HomeState extends State<Home> {
         ));
   }
 
-  void changeScreen(var id) {
+  Widget changeScreen(var id) {
     if (id == HomeScreenID.logOut) {
       showDialog(
         context: context,
@@ -201,37 +207,103 @@ class _HomeState extends State<Home> {
       );
       // _auth.signOut();
     } else if (id == HomeScreenID.test) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => TestScreen(
-                  dB: dB,
-                )),
-      );
+      print("hello");
+
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0)),
+                content: Form(
+                    key: _formKey,
+                    //autovalidate: false,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min, 
+                      // crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text('Water Source',
+                          style: GoogleFonts.poppins(
+                            textStyle: TextStyle(color: mainThemeColor),
+                          )),
+                      SizedBox(height: 10.0),
+                      Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.symmetric(vertical: 8.0),
+                          child: Column(
+                            children: <Widget>[
+                              DropDownField(
+                                labelText: 'Water Source',
+                                hintText: "Water Source",
+                                hintStyle: GoogleFonts.poppins(fontSize: 11),
+                                labelStyle: GoogleFonts.poppins(fontSize: 11),
+                                icon: Icon(Icons.bubble_chart),
+                                items: options,
+                                setter: (dynamic newValue) {
+                                  watersource = newValue.toString();
+                                },
+                              )
+                            ],
+                          )),
+                      SizedBox(height: 10.0),
+                      RaisedButton(
+                          color: mainThemeColor,
+                          child: Text("Next",
+                              style: GoogleFonts.poppins(
+                                  textStyle: TextStyle(color: Colors.white))),
+                          onPressed: () async {
+                            if (_formKey.currentState.validate()) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => TestScreen(
+                                            dB: dB,
+                                          )));
+                            } else {
+                              print("no");
+                            }
+                          })
+                    ])));
+          });
+
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //       builder: (context) => TestScreen(
+      //             dB: dB,
+      //           )),
+      // );
     } else if (id == HomeScreenID.yourInfo) {
-      return userInfoModalBottomSheet(context, des, name, add, email);
+      userInfoModalBottomSheet(context, des, name, add, email);
     } else if (id == HomeScreenID.previousResults) {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => History(dB: dB)),
+        // MaterialPageRoute(builder: (context) => HomePage())
       );
-    }else if (id == HomeScreenID.setting){
-      
-      return settingModalBottomSheet(context, des, name, add==null?"N/A":add , email,dB.updateUserDataDocument);
+    } else if (id == HomeScreenID.setting) {
+      settingModalBottomSheet(context, des, name, add == null ? "N/A" : add,
+          email, dB.updateUserDataDocument);
     }
   }
 
   Widget confirmLogout(BuildContext context) {
     return new AlertDialog(
       shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0),
-          ),
-      title: Text('Are you leaving?',style: GoogleFonts.poppins(textStyle: TextStyle(color: mainThemeColor),)),
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+      title: Text('Are you leaving?',
+          style: GoogleFonts.poppins(
+            textStyle: TextStyle(color: mainThemeColor),
+          )),
       content: new Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text('You are logging out. All your data will be saved.',style: GoogleFonts.poppins(textStyle: TextStyle(color: Color.fromRGBO(166, 166, 166, 1)),))
+          Text('You are logging out. All your data will be saved.',
+              style: GoogleFonts.poppins(
+                textStyle: TextStyle(color: Color.fromRGBO(166, 166, 166, 1)),
+              ))
         ],
       ),
       actions: <Widget>[
@@ -241,14 +313,18 @@ class _HomeState extends State<Home> {
             _auth.signOut();
           },
           textColor: Theme.of(context).primaryColor,
-          child: Text('Yes',style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black))),
+          child: Text('Yes',
+              style: GoogleFonts.poppins(
+                  textStyle: TextStyle(color: Colors.black))),
         ),
         FlatButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
           textColor: Theme.of(context).primaryColor,
-          child: Text('No',style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black))),
+          child: Text('No',
+              style: GoogleFonts.poppins(
+                  textStyle: TextStyle(color: Colors.black))),
         ),
       ],
     );

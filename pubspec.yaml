@@ -33,10 +33,10 @@ dependencies:
   jiffy: ^3.0.1
   syncfusion_flutter_charts: ^18.1.36
   fl_chart: ^0.8.6
-
-
-
-
+  geolocator: ^5.3.1
+  location: ^3.0.0
+  dropdownfield: 1.0.0
+  email_validator: "0.1.4"
 
 dev_dependencies:
   flutter_test:

@@ -37,7 +37,7 @@ class _TestsListState extends State<TestsList> {
         keys.sort();
         var latestKey = keys.last.toString();
         var testResults;
-
+        
         if (userTests[latestKey]["completed"] == false) {
           myKey = latestKey;
           testResults = userTests[latestKey]["testVal"];
@@ -101,7 +101,7 @@ class _TestsListState extends State<TestsList> {
               ? Text("Safe",
                   style: GoogleFonts.poppins(
                       textStyle: TextStyle(color: mainThemeColor)))
-              : Text("Unafe",
+              : Text("Unsafe",
                   style: GoogleFonts.poppins(
                       textStyle: TextStyle(color: Colors.red))),
     );
