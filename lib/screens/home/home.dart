@@ -10,7 +10,6 @@ import 'package:poolish/screens/test/test_screen.dart';
 import 'package:poolish/services/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:poolish/shared/loading.dart';
-import 'package:poolish/screens/test/test_source.dart';
 // import 'water_source.dart';
 import 'package:dropdownfield/dropdownfield.dart';
 
@@ -205,6 +204,7 @@ class _HomeState extends State<Home> {
         context: context,
         builder: (BuildContext context) => confirmLogout(context),
       );
+      
       // _auth.signOut();
     } else if (id == HomeScreenID.test) {
       print("hello");
